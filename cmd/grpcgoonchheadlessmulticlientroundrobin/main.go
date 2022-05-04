@@ -43,26 +43,27 @@ func main() {
 
 	wg := sync.WaitGroup{}
 	for i := 0; i < 10; i++ {
-		opts := []grpc.DialOption{
-			grpc.WithDefaultServiceConfig(`{"loadBalancingConfig": [{"round_robin":{}}]}`),
-			grpc.WithTransportCredentials(insecure.NewCredentials()),
-			grpc.WithUnaryInterceptor(grpcMetrics.UnaryClientInterceptor()),
-		}
-		conn, err := grpc.Dial(fmt.Sprintf("dns:///%s:%d", host, port), opts...)
-		if err != nil {
-			grpclog.Fatalf("Could not connect on port %d: %v", port, err)
-		}
-		defer conn.Close()
-
-		c := grpcgoonch.NewServiceClient(conn)
-		text := "encrypt me"
-		key := []byte("#89er@jdks$jmf_d")
-		request := grpcgoonch.Request{
-			Text: text,
-			Key:  key,
-		}
 		wg.Add(1)
 		go func() {
+			opts := []grpc.DialOption{
+				grpc.WithDefaultServiceConfig(`{"loadBalancingConfig": [{"round_robin":{}}]}`),
+				grpc.WithTransportCredentials(insecure.NewCredentials()),
+				grpc.WithUnaryInterceptor(grpcMetrics.UnaryClientInterceptor()),
+			}
+			conn, err := grpc.Dial(fmt.Sprintf("dns:///%s:%d", host, port), opts...)
+			if err != nil {
+				grpclog.Fatalf("Could not connect on port %d: %v", port, err)
+			}
+			defer conn.Close()
+
+			c := grpcgoonch.NewServiceClient(conn)
+			text := "encrypt me"
+			key := []byte("#89er@jdks$jmf_d")
+			request := grpcgoonch.Request{
+				Text: text,
+				Key:  key,
+			}
+
 			for i := 0; i < 200; i++ {
 				response, err := c.CryptoRequest(context.Background(), &request)
 				if err != nil {
