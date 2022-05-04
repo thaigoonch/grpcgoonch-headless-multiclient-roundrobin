@@ -39,32 +39,35 @@ func main() {
 	}()
 
 	host := "grpcgoonch-headless-long-service"
-	opts := []grpc.DialOption{
-		grpc.WithDefaultServiceConfig(`{"loadBalancingConfig": [{"round_robin":{}}]}`),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithUnaryInterceptor(grpcMetrics.UnaryClientInterceptor()),
-	}
-	conn, err := grpc.Dial(fmt.Sprintf("dns:///%s:%d", host, port), opts...)
-	if err != nil {
-		grpclog.Fatalf("Could not connect on port %d: %v", port, err)
-	}
-	defer conn.Close()
 
-	c := grpcgoonch.NewServiceClient(conn)
-	text := "encrypt me"
-	key := []byte("#89er@jdks$jmf_d")
-	request := grpcgoonch.Request{
-		Text: text,
-		Key:  key,
-	}
-	for i := 0; i < 24; i++ {
-		for i := 0; i < 200; i++ {
-			response, err := c.CryptoRequest(context.Background(), &request)
-			if err != nil {
-				grpclog.Fatalf("Error when calling CryptoRequest(): %v", err)
+	for i := 0; i < 12; i++ {
+		opts := []grpc.DialOption{
+			grpc.WithDefaultServiceConfig(`{"loadBalancingConfig": [{"round_robin":{}}]}`),
+			grpc.WithTransportCredentials(insecure.NewCredentials()),
+			grpc.WithUnaryInterceptor(grpcMetrics.UnaryClientInterceptor()),
+		}
+		conn, err := grpc.Dial(fmt.Sprintf("dns:///%s:%d", host, port), opts...)
+		if err != nil {
+			grpclog.Fatalf("Could not connect on port %d: %v", port, err)
+		}
+		defer conn.Close()
+	
+		c := grpcgoonch.NewServiceClient(conn)
+		text := "encrypt me"
+		key := []byte("#89er@jdks$jmf_d")
+		request := grpcgoonch.Request{
+			Text: text,
+			Key:  key,
+		}
+		for i := 0; i < 2; i++ {
+			for i := 0; i < 200; i++ {
+				response, err := c.CryptoRequest(context.Background(), &request)
+				if err != nil {
+					grpclog.Fatalf("Error when calling CryptoRequest(): %v", err)
+				}
+
+				log.Printf("Response from Goonch Server: %s", response.Result)
 			}
-
-			log.Printf("Response from Goonch Server: %s", response.Result)
 		}
 	}
 }
