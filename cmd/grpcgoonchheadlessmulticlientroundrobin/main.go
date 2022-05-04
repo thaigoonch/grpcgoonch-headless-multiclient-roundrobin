@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"github.com/prometheus/client_golang/prometheus"
@@ -40,7 +41,8 @@ func main() {
 
 	host := "grpcgoonch-headless-service"
 
-	for i := 0; i < 12; i++ {
+	wg := sync.WaitGroup{}
+	for i := 0; i < 10; i++ {
 		opts := []grpc.DialOption{
 			grpc.WithDefaultServiceConfig(`{"loadBalancingConfig": [{"round_robin":{}}]}`),
 			grpc.WithTransportCredentials(insecure.NewCredentials()),
@@ -59,7 +61,8 @@ func main() {
 			Text: text,
 			Key:  key,
 		}
-		for i := 0; i < 2; i++ {
+		wg.Add(1)
+		go func() {
 			for i := 0; i < 200; i++ {
 				response, err := c.CryptoRequest(context.Background(), &request)
 				if err != nil {
@@ -68,6 +71,8 @@ func main() {
 
 				log.Printf("Response from Goonch Server: %s", response.Result)
 			}
-		}
+			wg.Done()
+		}()
 	}
+	wg.Wait()
 }

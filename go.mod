@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/prometheus/client_golang v1.12.1
-	github.com/thaigoonch/grpcgoonch-headless v0.0.0-20220504004121-06e14e0c07aa
+	github.com/thaigoonch/grpcgoonch-headless v0.0.0-20220504063302-0b8bd654673e
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4
 	google.golang.org/grpc v1.46.0
 )
