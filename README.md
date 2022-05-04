@@ -1,1 +1,1 @@
-# grpcgoonch-headless-long-multiclient-roundrobin
+# grpcgoonch-headless-multiclient-roundrobin

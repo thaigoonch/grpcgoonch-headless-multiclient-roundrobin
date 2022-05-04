@@ -8,7 +8,7 @@ import (
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	grpcgoonch "github.com/thaigoonch/grpcgoonch-headless-long/service"
+	grpcgoonch "github.com/thaigoonch/grpcgoonch-headless/service"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
@@ -38,7 +38,7 @@ func main() {
 		}
 	}()
 
-	host := "grpcgoonch-headless-long-service"
+	host := "grpcgoonch-headless-service"
 
 	for i := 0; i < 12; i++ {
 		opts := []grpc.DialOption{
@@ -51,7 +51,7 @@ func main() {
 			grpclog.Fatalf("Could not connect on port %d: %v", port, err)
 		}
 		defer conn.Close()
-	
+
 		c := grpcgoonch.NewServiceClient(conn)
 		text := "encrypt me"
 		key := []byte("#89er@jdks$jmf_d")

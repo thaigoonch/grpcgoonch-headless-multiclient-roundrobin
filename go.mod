@@ -1,10 +1,11 @@
-module github.com/thaigoonch/grpcgoonch-headless-long-multiclient-roundrobin
+module github.com/thaigoonch/grpcgoonch-headless-multiclient-roundrobin
 
 go 1.17
 
 require (
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/prometheus/client_golang v1.12.1
+	github.com/thaigoonch/grpcgoonch-headless v0.0.0-20220504004121-06e14e0c07aa
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4
 	google.golang.org/grpc v1.46.0
 )
@@ -17,7 +18,6 @@ require (
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.34.0 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
-	github.com/thaigoonch/grpcgoonch-headless-long v0.0.0-20220504024332-be5f09d0a53a
 	golang.org/x/sys v0.0.0-20220503163025-988cb79eb6c6 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20220503193339-ba3ae3f07e29 // indirect
