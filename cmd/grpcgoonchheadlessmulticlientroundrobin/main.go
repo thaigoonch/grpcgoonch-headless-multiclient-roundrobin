@@ -42,7 +42,7 @@ func main() {
 	host := "grpcgoonch-headless-service"
 
 	wg := sync.WaitGroup{}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 20; i++ {
 		wg.Add(1)
 		go func() {
 			opts := []grpc.DialOption{
@@ -64,7 +64,7 @@ func main() {
 				Key:  key,
 			}
 
-			for i := 0; i < 200; i++ {
+			for i := 0; i < 120; i++ {
 				response, err := c.CryptoRequest(context.Background(), &request)
 				if err != nil {
 					grpclog.Fatalf("Error when calling CryptoRequest(): %v", err)
