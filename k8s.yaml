@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: grpcgoonch-headless-long-multiclient-roundrobin-cronjob
+  name: grpcgoonch-headless-long-multiclient-roundrobin-cron
   labels:
     app: grpcgoonch-headless-long-multiclient-roundrobin
 spec:
